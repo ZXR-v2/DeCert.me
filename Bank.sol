@@ -41,6 +41,7 @@ contract Bank{
         uint256 _amount = msg.value;
         balances[_to] += _amount;
         total += _amount;
+        // 此处不需要payable(address(this)).transfer(_amount);因为deposit函数已经可以在调用时发起转账
         uint256 newBalance = balances[_to];
 
         // Skip if already in top3
@@ -77,6 +78,9 @@ contract Bank{
 
         emit Withdraw(owner, withdrawAmount, total);
     }
+
+    // 可以不需要receive函数，因为deposit已经可以转账了，除非想有事没事就给合约转账但不用记在账上（即deposit上）
+    // receive() external payable {}
     
     /**
      * @dev Change owner
