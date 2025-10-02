@@ -41,7 +41,6 @@ contract Bank{
         uint256 _amount = msg.value;
         balances[_to] += _amount;
         total += _amount;
-        payable(address(this)).transfer(_amount);
         uint256 newBalance = balances[_to];
 
         // Skip if already in top3
@@ -77,9 +76,6 @@ contract Bank{
         require(success, "Transfer failed");
 
         emit Withdraw(owner, withdrawAmount, total);
-    }
-
-    receive() external payable { 
     }
     
     /**
